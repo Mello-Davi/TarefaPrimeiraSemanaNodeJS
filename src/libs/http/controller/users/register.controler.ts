@@ -1,39 +1,24 @@
-import z from "zod"
-import { prisma } from "@/libs/prisma.js"
+import z, { string } from "zod"
 import type { FastifyReply, FastifyRequest } from "fastify"
-import { hash } from "bcryptjs"
-import { env } from "@/env/index.js"
+import { RegisterUserUseCase } from "@/use-cases/users/register"
+
 
 export async function register (request: FastifyRequest, reply: FastifyReply) {
     const registerBodySchema = z.object({
         nome: z.string().trim().min(1).max(100),
         email: z.email().min(1).max(100),
         password: z.string().min(8).max(100),
-        foto: z.string().optional().nullable()
+        foto: z.string().optional()
     })
 
     const {nome, email, password, foto} = registerBodySchema.parse(request.body)
 
-    const userWithSameEmail = await prisma.usuario.findFirst( ({
-        where:{
-            email
-        }
-    }))
-
-    if(userWithSameEmail){
-        return reply.status(409).send({message: 'This email is already in use.'})
-    }
-
-    const passwordHash = await hash(password, env.HASH_SALT_ROUNDS)
-
-    const user = await prisma.usuario.create({
-        data: {
-            nome,
-            email,
-            passwordHash,
-            foto: foto ?? null
-            
-        }   
+    const { user } = await new RegisterUserUseCase().execute({
+        nome,
+        email,
+        password,
+        ...(foto !== undefined && {foto})
     })
+
     return reply.status(201).send(user)
 }
