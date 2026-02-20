@@ -6,17 +6,16 @@ import type { FastifyReply, FastifyRequest } from "fastify"
 
 export async function deleteUser (request: FastifyRequest, reply: FastifyReply) {
     try {
-        const deleteParamsSchema = z.object({
+        const deleteUserParamsSchema = z.object({
             publicId: z.string()
         })
     
-        const { publicId } = deleteParamsSchema.parse(request.params)
+        const { publicId } = deleteUserParamsSchema.parse(request.params)
    
         const deleteUserUseCase = makeDeleteUserUseCase()
         await deleteUserUseCase.execute({
             publicId
         })
-    
         return reply.status(200).send()
     } catch (error){
         if(error instanceof ResourceNotFoundError){

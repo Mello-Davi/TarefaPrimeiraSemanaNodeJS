@@ -12,12 +12,12 @@ export class DeleteUserUseCase {
         publicId
     }: DeleteUserUseCaseRequest){
         
-        const user = await this.usuariosRepository.findBy({publicId})
+        const userToDelete = await this.usuariosRepository.findBy({publicId})
  
-        if (!user){
+        if (!userToDelete){
             throw new ResourceNotFoundError()
         }
 
-        await this.usuariosRepository.delete(user.id)
+        await this.usuariosRepository.delete(userToDelete.id)
     }
 }

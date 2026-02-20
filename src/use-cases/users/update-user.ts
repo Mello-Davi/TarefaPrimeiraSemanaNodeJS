@@ -22,13 +22,13 @@ export class UpdateUserUseCase {
         foto,
     }: UpdateUserUseCaseRequest): Promise<UpdateUserUseCaseResponse>{
         
-        const userToupdate = await this.usuariosRepository.findBy({publicId})
+        const userToUpdate = await this.usuariosRepository.findBy({publicId})
 
-        if (!userToupdate){
+        if (!userToUpdate){
             throw new ResourceNotFoundError()
         }
 
-        const user = await this.usuariosRepository.update(userToupdate.id, {
+        const user = await this.usuariosRepository.update(userToUpdate.id, {
             nome,
             email,
             foto

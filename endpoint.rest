@@ -1,10 +1,10 @@
 @apiUrl = http://localhost:{{$dotenv PORT}}
+@publicId=fcbc2944-941f-46ea-9a52-81d06dae06c8
 
-POST {{apiUrl}}/users HTTP/1.1
+DELETE {{apiUrl}}/users/:{{publicId}} HTTP/1.1
 Content-Type: application/json
 
-{
-    "email": "e1231lawdld2312300@gmail.com",
-    "nome": "Dave1223R123meawdl",
-    "password": "12345678"
-}
+
+
+
+

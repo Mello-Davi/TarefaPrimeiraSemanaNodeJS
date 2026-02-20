@@ -1,6 +1,5 @@
 import fastify from 'fastify'
 import { appRoutes } from './libs/http/controller/routes.js'
-import { error } from 'console'
 import { ZodError } from 'zod'
 
 export const app = fastify()
