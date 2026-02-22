@@ -4,4 +4,5 @@ build
 /src/@types/prisma
 /src/libs/prisma-teste.ts
 /.postman
-postman
+.postman
+/collections
