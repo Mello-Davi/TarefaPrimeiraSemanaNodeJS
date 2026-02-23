@@ -10,9 +10,10 @@ const envSchema = z.object({
   
   DATABASE_URL: z.string(),
   HASH_SALT_ROUNDS: z.coerce.number().default(12),
+  JWT_SECRET: z.string(),
 })
 
-const _env = envSchema.safeParse(process.env)
+export const _env = envSchema.safeParse(process.env)
 
 if (_env.success === false) {
   console.error('Invalid enviroment variables.', _env.error)
